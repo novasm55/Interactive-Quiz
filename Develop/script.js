@@ -65,6 +65,9 @@ function startQuiz() {
   startTimer();
 }
 
+//for (let i = 0; i < quizData.length; i++) {
+  //text += quizData[i] + "<br>";
+
 // Function to start timer
 function startTimer() {
   const countdown = setInterval(function(){
@@ -83,18 +86,47 @@ function startTimer() {
 function displayQuestion() {
   const question = quizData[currentQuestion];
   questionEl.textContent = question.prompt;
-  choice1.textContent = question.choices[0];
-  choice2.textContent = question.choices[1];
-  choice3.textContent = question.choices[2];
-  choice4.textContent = question.choices[3];
-
-  choicesEl;
+  choicesEl.innerHTML = "";
+  for(let i = 0; i < question.choices.length ; i++){
+    var choice = question.choices[i];
+    var choiceNode = document.createElement("button");
+    choiceNode.setAttribute("class","choice");
+    choiceNode.setAttribute("value", choice);
+    choiceNode.textContent = choice;
+    choicesEl.appendChild(choiceNode);
   //const answer = quiz
+  }
 }
 
-function answerQuestion(){
-  
+function answerQuestion(event) {
+var btnEl = event.target;
+if(btnEl.value !== quizData[currentQuestion].answer){
+  currentQuestion++;
+  //penalizes timer
+  timeLeft = timeLeft - 5;
+  displayQuestion();
+
+}
+//Conditional statement for correct answer
+else{
+  currentQuestion++;
+  score = score++;
+  displayQuestion();
+
+}
+
 }
 //Event Listener
-
 startBtn.addEventListener("click", startQuiz);
+
+choicesEl.onclick = answerQuestion;
+
+//End Game function
+if(timeLeft == 0 || currentQuestion == 5){
+function endGame() {
+  //locally store score
+var initials = "Score: " + score;
+  //locally store user initials
+  var gameOverNode = document.createElement("h2");
+ 
+}}
