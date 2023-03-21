@@ -1,18 +1,18 @@
-// **  Declare Global Variables ** //
+// Declare Global Variables
 
-// Define amount of game time (in seconds)
-let count;
+// Define amount of game time (in 1000's)
+let timeRemaing;
 
-// How many questions do we have?
+//  Counts length (number of) questions
 let numQuestions = questions.length;
 
-// Create a variable to keep track of what question we are on
-let currentQuestion;
+// Presents current question [i]
+let presentQ;
 
-// Create a variable to hold the STATE of the game
-let gameStop = true;
+// Active Game State Status (boolean)
+let activeGame = true;
 
-// Create a variable to store the current games score
+// Stores the user's game score
 let gameScore;
 
 // Create a variable to store the score point bonus awarded for correct answers
@@ -22,17 +22,17 @@ let correctAnswerScore;
 // Declare our timer variable globally and we can clear it anywhere in our code later (not just when the timer ends, say when the game ends)
 let timerInterval;
 
-// Create a GLOBAL variable to hold our users answers
+// Stores the users selected answers
 let userAnswers = [];
 
-// Grab HTML elements for later DOM manipulation
+// Holds HTML elements for DOM manip
 let time = document.getElementById("timer");
 let score = document.getElementById("user-score");
 
 let startBtn = document.getElementById("start");
 startBtn.addEventListener("click", newGame);
 
-// Get each container <div>
+// Grabs HTML containers
 let welcomeDiv = document.querySelector(".welcome-container");
 let questionDiv = document.querySelector(".questions-container");
 let formDiv = document.querySelector(".form-container");
@@ -47,11 +47,11 @@ let qChoices = document.getElementById("question-choices");
 // Grab form input element 
 let username = document.getElementById("username");
 
-// Capture Submit Event
+// Grabs user input submission
 let userSubmit = document.getElementById("userSubmit");
 userSubmit.addEventListener("click", saveUser);
 
-// Modal Logic
+// Modals Logic
 let closeModal = document.querySelector(".close")
 closeModal.addEventListener("click", clearModal);
 // Close Modal when clicked outside of modal-container
@@ -63,29 +63,27 @@ exit.addEventListener("click", clearModal);
 let clearScores = document.querySelector(".clear");
 clearScores.addEventListener("click", clearLeaderBoard);
 
-// ---------------------------------------------------- //
-//
+
 // Initalization Function: Function will look into local
 //    storage, convert JSON objct into JavaScript object,
 //    and sort through object array for highest score.
-//
-// ---------------------------------------------------- //
+
 function initialize() {
 
     // IF there is nothing stored currently in local storage add some filler data
     if (localStorage.length === 0) {
-        // Create a variable to PERSIST our high score
+        // Create a variable to keep our high scores
         highScoreArray = [
             {
                 username: "John Hancock",
                 score: 1776
             },
             {
-                username: "Aristotle Wellington",
+                username: "Beef Wellington",
                 score: 21
             },
             {
-                username: "Napolean Bon'a'part",
+                username: "Napolean Bonaparte",
                 score: 83
             }
         ];
@@ -104,12 +102,11 @@ function initialize() {
     let max = 0;
     let user;
 
-    // Let's find the TOP score
+    // Iterates through scores to find the top score
     for (let i = 0; i < parsedScore.length; i++) {
-        // TEST to see if current score [i] is greater than current value of max
-        // NOTE that we are dealing with an OBJECT, the OBJECT contains both 'username' and 'score' properties
+       //Conditional if statement
         if (max < parsedScore[i].score) {
-            // IF GREATER than set new max value
+            // Updates user score
             max = parsedScore[i].score;
             user = parsedScore[i].username;
         }
@@ -121,34 +118,31 @@ function initialize() {
 
 }
 
-// We declared it let's run it in the browswer
+// Initializes app
 initialize();
 
-// ---------------------------------------------------- //
-//
-// New Game Function: 
-//
-// ---------------------------------------------------- //
+
+// newGame function
+
 function newGame() {
-    // Set gameEnd variable to FALSE and start game
-    gameStop = false;
-    // Reset score
+    // Set activeGame variable to FALSE and start game
+    activeGame = false;
+    // Resets score
     gameScore = 0;
 
-    // Initalize question set 
-    currentQuestion = 0;
+    // Initalize question set with index 0
+    presentQ = 0;
 
-    // ** REMOVE ??? ** //
-    // Reset answer array for new game
+    // Resets answers for new game
     userAnswers = [];
 
-    // ** Initialize Timer ** //
+    // Start timer
     // Define amount of game time (in seconds)
-    count = 75;
+    timeRemaing = 100;
     // call timer function to initiate timerInterval
     timer();
-    // Show time on the DOM
-    time.textContent = count;
+    // Display time via DOM
+    time.textContent = timeRemaing;
 
     // Hide 'welcome-container' div
     welcomeDiv.classList.add("hide");
@@ -159,39 +153,35 @@ function newGame() {
     check();
 }
 
-// ---------------------------------------------------- //
-//
-// Timer Function:
-//
-// ---------------------------------------------------- //
+
+// Timer
+
 function timer() {
      // Create a new timer
     timerInterval = setInterval(function() {
-        // decrement timer count
-        count--;
-        // update display in DOM
-        time.textContent = count;
+        // decrement timer timeRemaing
+        timeRemaing--;
+        // display update via DOM
+        time.textContent = timeRemaing;
 
         // Test - Time runs out 
-        if (count <= 0) {
+        if (timeRemaing <= 0) {
             // Run gameOver function
             gameOver();
         }
 
 
 
-    }, 1000)  // Run every 1000 ms (or 1 second)
+    }, 1000)  // Run every 1000 ms
 }
 
 
-// ---------------------------------------------------- //
-//
-// Check Function: Tests if we have run out of quesitons
-//
-// ---------------------------------------------------- //
+
+// Check Functions
+
 function check() {
     // TEST HOW MANY QUESTIONS LEFT
-    if (currentQuestion === numQuestions) {
+    if (presentQ === numQuestions) {
         // Run gameOver function
         gameOver();
     } else {
@@ -200,27 +190,26 @@ function check() {
 } 
 
 
-// ---------------------------------------------------- //
-//
-// Load Question Function:
-//
-// ---------------------------------------------------- //
+
+// loadQuestion
+
 function loadQuestion() {
-    // Clear question title
+    // Question title string
     qTitle.textContent = '';
     qChoices.textContent = '';
 
-    for (let i = 0; i < questions[currentQuestion].choices.length; i++) {
-        qTitle.textContent = questions[currentQuestion].title;
+    for (let i = 0; i < questions[presentQ].choices.length; i++) {
+        qTitle.textContent = questions[presentQ].title;
 
-        //-- Render a new <li> for each question choice --//
+        //Creates a new li element --//
+
         // Create li element for each answer choice
         let ansChoice = document.createElement("li");
         // Add 'id' attribute to each choice 
         ansChoice.setAttribute("id", i);
         // Add 'data' attribute to each choice
         ansChoice.setAttribute("data-name", `data-choice-${i}`);
-        ansChoice.setAttribute("value", questions[currentQuestion].choices[i]);
+        ansChoice.setAttribute("value", questions[presentQ].choices[i]);
         // Add our class containing the CSS styling 
         ansChoice.classList.add("ans-choice");
 
@@ -228,7 +217,7 @@ function loadQuestion() {
         // Add event listener
         ansChoice.addEventListener("click", next)
         // Update text of li element
-        ansChoice.textContent = questions[currentQuestion].choices[i];
+        ansChoice.textContent = questions[presentQ].choices[i];
 
         // Add answer choice to <ul> DOM
         qChoices.appendChild(ansChoice);
@@ -240,57 +229,54 @@ function loadQuestion() {
 
 }
 
-// ---------------------------------------------------- //
-//
-// Log User Selection Function:
-//
-// ---------------------------------------------------- //
+
+// Function for user answer
+
 function next(event) {
-    // Uncomment the lines below and inspect the console output if your struggling with events
+    // inspecting console output to debug event targeting issues
     // console.log(event);
    //  console.log(event.target);
   //  console.log(event.target.id);
    // console.log(event.target.innerText);
 
-    if(event.target.innerText === questions[currentQuestion].answer) {
+    if(event.target.innerText === questions[presentQ].answer) {
         gameScore += 50;
     }
         // Incorrect answer timer penalty
 
- if (event.target.innerText !== questions[currentQuestion].answer) {
-            count -= 30;
-          //  console.log(count);
+ if (event.target.innerText !== questions[presentQ].answer) {
+            timeRemaing -= 30;
+          //  console.log(timeRemaing);
         }
         
-    // Increment currentQuestion
-    currentQuestion++;
+    // Increment presentQ
+    presentQ++;
 
     // Run check
     check();
 }
 
-// ---------------------------------------------------- //
-//
-// End Game Function: Updates gameEnd variable, clears the timer interval, displays end game text 
-//      calls the scoring function and the username form
-//
-// ---------------------------------------------------- //
-function gameOver() {
-    // Set gameStop variable to TRUE
-    gameStop = true;
 
-    // Clear countdown timer
+// function for ending game
+// Updates gameEnd variable, clears the timer interval, displays end game text 
+// calls the scoring function and the username form
+
+function gameOver() {
+    // Set activeGame variable to TRUE
+    activeGame = true;
+
+    // Clear timer
     clearInterval(timerInterval);
     time.textContent = "- -";
 
     // Add any time left to game score
-    gameScore += count;
+    gameScore += timeRemaing;
 
  
     // Hide question container
     questionDiv.classList.add("hide");
 
-    // Display Game Score
+    // Show gameScore
     score.textContent = gameScore;
     // Un-hide form container
     formDiv.classList.remove("hide");
@@ -298,11 +284,9 @@ function gameOver() {
     username.value = '';
 }
 
-// ---------------------------------------------------- //
-//
-// Save User/Score Function: 
-//
-// ---------------------------------------------------- //
+
+// Function for saving score
+
 function saveUser(event) {
     // Prevent the form from reloading the page
     event.preventDefault();
@@ -343,16 +327,14 @@ function saveUser(event) {
     }
     // Clear form input field
     username.value = '';
-    // Display the Leader Board
+    // Display the Leaderboard
     showLeader();
 }
 
-// ---------------------------------------------------- //
-//
+
 // Leader Board Function: Function will pull userScore OBJECT
 //     from local storage and create a leader board div
-//
-// ---------------------------------------------------- //
+
 function showLeader() {
     // Hide All Container Divs
     formDiv.classList.add("hide");
@@ -368,7 +350,7 @@ function showLeader() {
     let highScoreBoard = localStorage.getItem('userScores');
     let parsedScoreBoard = JSON.parse(highScoreBoard);
 
-    // Display high scores
+    // Shows high scores
     for (let i = 0; i < parsedScoreBoard.length; i++) {
         let newScore = document.createElement("li");
         newScore.textContent = parsedScoreBoard[i].username + " : " + parsedScoreBoard[i].score;
@@ -377,12 +359,9 @@ function showLeader() {
     }
 }
 
-// ---------------------------------------------------- //
-//
-// Sort Function: Function will sort the Leader Board
-//     into high to low scores
-//
-// ---------------------------------------------------- //
+
+// Function will sort the Leaderboard into high to low scores
+
 function sortScores(scoreObj) {
     // Sort through the Object and return scores highest to lowest
     scoreObj.sort( function(a, b) {
@@ -391,12 +370,9 @@ function sortScores(scoreObj) {
     });
 }
 
-// ---------------------------------------------------- //
-//
-// Clear Leader Board Function: Function will clear userScore OBJECT
-//     from local storage
-//
-// ---------------------------------------------------- //
+
+// Clear Leader Board Function: Function will clear userScore OBJECT from local storage
+
 function clearLeaderBoard() {
     // Clear what is in localStorage
     localStorage.removeItem("userScores");
@@ -408,16 +384,13 @@ function clearLeaderBoard() {
     leaderboard.innerHTML = "";
 }
 
-// ---------------------------------------------------- //
-//
-// Clear Modal Function: Function will clear Leader Board
-//      Modal overlay and return to welcome screen
-//
-// ---------------------------------------------------- //
+
+// Clear Modals 
+
 function clearModal() {
     // hide modal
     highScoreModal.classList.add("hide");
-    // Un-hide Start Message
+    // unhide
     welcomeDiv.classList.remove("hide");
 }
 
@@ -425,7 +398,7 @@ function outsideModal(event) {
     if (event.target == highScoreModal) {
         // hide modal
         highScoreModal.classList.add("hide");
-        // Un-hide Start Message
+        // Unhide
         welcomeDiv.classList.remove("hide");
     }
 } 
