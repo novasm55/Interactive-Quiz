@@ -6,6 +6,35 @@ const results = document.getElementById("results");
 const saveBtn = document.getElementById("saveBtn");
 const initialsInput = document.getElementById("initials");
 
+// High Score Viewing
+
+// Get DOM element for highscores
+const highscoresDiv = document.getElementById("highscores");
+const viewHighscoresBtn = document.getElementById("viewHighscoresBtn");
+
+// Add event listener to the View Highscores button
+viewHighscoresBtn.addEventListener("click", function() {
+    // Retrieve highscores from local storage
+    const highscores = JSON.parse(localStorage.getItem("highScores")) || [];
+  
+    // Sort highscores in descending order
+    highscores.sort((a, b) => b.score - a.score);
+  
+    // Clear the highscoresDiv
+    highscoresDiv.innerHTML = "";
+
+    // Display each highscore
+    highscores.forEach(scoreObj => {
+        const scoreP = document.createElement("p");
+        scoreP.textContent = `${scoreObj.initials}: ${scoreObj.score}`;
+        highscoresDiv.appendChild(scoreP);
+    });
+
+    // Toggle visibility of the highscores
+    highscoresDiv.classList.toggle("hidden");
+});
+
+
 // Sample question set
 const questions = [
   {
