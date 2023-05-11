@@ -160,14 +160,23 @@ function handleAnswer(e) {
     e.target.classList.add("correct-answer");
   } else {
     // Adds Red CSS styling on the answer button to inform user they were wrong
-    e.target.classList.add("wrong-answer");
     timeLeft -= 10;
-  }
+    e.target.classList.add("wrong-answer");
+  };
+ // Disable all answer buttons
+ const answerBtns = document.querySelectorAll(".answerBtn");
+ answerBtns.forEach((btn) => {
+     btn.disabled = true;
+ });
 
-  // Move on to the next question
-  currentQuestion++;
-  displayQuestion();
+ // Wait for a while before moving on to the next question
+ setTimeout(function() {
+     // Move on to the next question
+     currentQuestion++;
+     displayQuestion();
+ }, 1000); // 1000ms = 1s
 }
+
 
 // Function to end the quiz and show the results section
 function endQuiz() {
