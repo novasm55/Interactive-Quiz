@@ -4,6 +4,8 @@
 
 This project is a timed coding quiz with multiple-choice questions. The quiz application runs in the browser and features dynamically updated HTML and CSS powered by JavaScript. It has a clean, polished, and responsive user interface.
 
+The deployed application is running at https://novasm55.github.io/Interactive-Quiz/
+
 ## User Story
 
 ```
@@ -61,7 +63,7 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 ## Screenshots
 
-[Add screenshots of your project here.]
+!(Screenshot 2023-05-11 114810.png)
 
 ## Credits
 
