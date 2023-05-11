@@ -1,4 +1,4 @@
-# Web APIs Challenge: Code Quiz
+# Web APIs: Interactive Code Quiz
 
 ## Description
 
