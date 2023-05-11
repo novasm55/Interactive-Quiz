@@ -8,8 +8,61 @@ const initialsInput = document.getElementById("initials");
 
 // Sample question set
 const questions = [
-  { question: "Question 1", answers: ["A", "B", "C"], correct: "A" },
-  { question: "Question 2", answers: ["A", "B", "C"], correct: "B" },
+  {
+    question: "Inside which HTML element do we put the JavaScript?",
+    answers: ["&lt;scripting&gt;", "&lt;js&gt;", "&lt;script&gt;", "&lt;javascript&gt;"],
+    correct: "&lt;script&gt;"
+  },
+  {
+    question: "Where is the correct place to insert a JavaScript?",
+    answers: ["The &lt;body&gt; section", "Both the &lt;head&gt; section and the &lt;body&gt; section are correct", "The &lt;head&gt; section"],
+    correct: "Both the &lt;head&gt; section and the &lt;body&gt; section are correct"
+  },
+  {
+    question: "What is the correct syntax for referring to an external script called 'xxx.js'?",
+    answers: ["&lt;script href='xxx.js'&gt;", "&lt;script name='xxx.js'&gt;", "&lt;script src='xxx.js'&gt;"],
+    correct: "&lt;script src='xxx.js'&gt;"
+  },
+  {
+    question: "The external JavaScript file must contain the &lt;script&gt; tag.",
+    answers: ["True", "False"],
+    correct: "False"
+  },
+  {
+    question: "How do you write 'Hello World' in an alert box?",
+    answers: ["msgBox('Hello World');", "alertBox('Hello World');", "msg('Hello World');", "alert('Hello World');"],
+    correct: "alert('Hello World');"
+  },
+  {
+      question: "What will the following JavaScript code output: console.log(typeof typeof 1);?",
+      answers: ["string", "number", "undefined", "boolean"],
+      correct: "string"
+  },
+  {
+      question: "Which JavaScript method removes the last element from an array and returns that element?",
+      answers: ["shift()", "pop()", "push()", "unshift()"],
+      correct: "pop()"
+  },
+  {
+      question: "How do you declare a JavaScript variable?",
+      answers: ["var carName;", "v carName;", "variable carName;", "var = carName;"],
+      correct: "var carName;"
+  },
+  {
+      question: "Which JavaScript operator is used to assign a value to a variable?",
+      answers: ["*", "=", "+", "-"],
+      correct: "="
+  },
+  {
+      question: "What is the correct JavaScript syntax to change the content of the HTML element below? <p id='demo'>This is a demonstration.</p>",
+      answers: ["document.getElementByName('p').innerHTML = 'Hello World!';", "document.getElementById('demo').innerHTML = 'Hello World!';", "#demo.innerHTML = 'Hello World!';", "document.getElement('p').innerHTML = 'Hello World!';"],
+      correct: "document.getElementById('demo').innerHTML = 'Hello World!';"
+  },
+  {
+      question: "Which event occurs when the user clicks on an HTML element?",
+      answers: ["onmouseclick", "onchange", "onclick", "onmouseover"],
+      correct: "onclick"
+  }
 ];
 
 // Variables for keeping track of the current question, time left, interval ID, and user score
@@ -75,7 +128,7 @@ function handleAnswer(e) {
   if (questions[currentQuestion].answers[userAnswer] === correctAnswer) {
     score++;
   } else {
-    timeLeft -= 10;
+    timeLeft -= 30;
   }
 
   // Move on to the next question
