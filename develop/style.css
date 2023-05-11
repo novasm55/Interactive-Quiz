@@ -5,14 +5,6 @@ body {
   padding: 0;
 }
 
-.container {
-  background-color: white;
-  margin: 50px auto;
-  max-width: 600px;
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0px 0px 10px 2px rgba(0,0,0,0.1);
-}
 
 h1, h2 {
   color: #800080; /* Purple */
@@ -36,17 +28,28 @@ button:hover {
   background-color: #5c005c; /* Darker Purple */
 }
 
-#timer {
-  color: #800080; /* Purple */
-  float: right;
+.container {
+  background-color: white;
+  margin: 50px auto;
+  max-width: 600px;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px 2px rgba(0,0,0,0.1);
 }
 
-#quiz, #results {
-  clear: both;
-}
 
 .hidden {
   display: none;
+}
+
+
+
+.correct-answer {
+  background-color: green !important;
+}
+
+.wrong-answer {
+  background-color: red !important;
 }
 
 #quiz button {
@@ -56,4 +59,9 @@ button:hover {
 
 #results input[type="text"] {
   width: 200px;
+}
+
+
+#quiz, #results {
+  clear: both;
 }

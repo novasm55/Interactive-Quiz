@@ -155,9 +155,13 @@ function handleAnswer(e) {
 
   // Increment score if the answer is correct, otherwise reduce the time
   if (questions[currentQuestion].answers[userAnswer] === correctAnswer) {
-    score++;
+    score += 10;
+    // Adds Green CSS styling on the answer button to inform user they were correct
+    e.target.classList.add("correct-answer");
   } else {
-    timeLeft -= 30;
+    // Adds Red CSS styling on the answer button to inform user they were wrong
+    e.target.classList.add("wrong-answer");
+    timeLeft -= 10;
   }
 
   // Move on to the next question
