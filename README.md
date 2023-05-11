@@ -62,8 +62,13 @@ This project is licensed under the terms of the MIT license.
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 ## Screenshots
+## Screenshots
 
-![Screenshot](Screenshot 2023-05-11 114810.png)
+Below is a screenshot of the quiz application in action:
+
+![Interactive Code Quiz](https://github.com/novasm55/Interactive-Quiz/blob/main/Screenshot%202023-05-11%20114810.png)
+
+Click [here](https://github.com/novasm55/Interactive-Quiz/blob/main/Screenshot%202023-05-11%20114810.png) to view the full-sized image.
 
 ## Credits
 
