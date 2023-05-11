@@ -63,7 +63,7 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 ## Screenshots
 
-!(Screenshot 2023-05-11 114810.png)
+!(https://github.com/novasm55/Interactive-Quiz/blob/e2ac222fee5110aaf8573c1522aa1e6b1fca7d0d/Screenshot%202023-05-11%20114810.png)
 
 ## Credits
 
